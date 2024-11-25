@@ -1,0 +1,32 @@
+#!/usr/bin/env ruby
+
+require 'gli'
+
+require 'another/ldap/proxy'
+
+class Cli
+  extend GLI::App
+
+  program_desc 'Another::Ldap::Proxy CLI'
+
+  version Another::Ldap::Proxy::VERSION
+
+
+  desc 'Start the proxy'
+  command :start do |c|
+      c.desc 'Port to listen on'
+      c.default_value ENV.fetch('ANOTHER_LDAP_PROXY_PORT', 1389)
+      c.arg_name 'port'
+      c.flag [:p, :port]
+
+    c.action do |global_options, options, args|
+      port = options[:port]
+      puts "Running default action on port #{port}..."
+      # Add your default logic here
+    end
+  end
+
+  default_command :start
+end
+
+exit Cli.run(ARGV)
