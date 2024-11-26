@@ -1,0 +1,17 @@
+---
+
+port: 1389
+nodelay: yes
+listen: 10
+
+root_username: admin
+root_password: admin
+
+backend_mode: first
+backends:
+  - type: ldap
+    url: http://ldap.test.org
+    base: dc=base
+    auth_method: simple
+    username: admin
+    password: admin
