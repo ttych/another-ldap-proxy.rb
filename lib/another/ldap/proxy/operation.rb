@@ -26,7 +26,8 @@ module Another
         end
 
         def simple_bind(version, dn, password)
-          logger&.info "Operation#simple_bind ( #{version}, #{dn}, *** )"
+          logger&.info "Operation#simple_bind : version:#{version} dn:#{dn}"
+          logger&.debug "Operation#simple_bind : dn:#{dn} password:#{password}"
 
           return if _validate_root_credentials(dn, password)
 

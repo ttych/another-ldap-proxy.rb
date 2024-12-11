@@ -16,6 +16,10 @@ module Another
           @conf = conf
         end
 
+        def debug
+          conf[:debug]
+        end
+
         def self.from_file(conf_file)
           raise "Configuration file not found: #{conf_file}" unless File.exist?(conf_file)
 

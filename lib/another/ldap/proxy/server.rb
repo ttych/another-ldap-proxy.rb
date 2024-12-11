@@ -9,12 +9,11 @@ module Another
       class Server
         SERVER_OPTIONS = %i[port nodelay listen].freeze
 
-        attr_reader :conf, :logger
+        attr_reader :conf
 
         def initialize(conf:, logger: nil)
           @conf = conf
-          @logger = logger || Logger.new($stdout)
-          # @logger.level = Logger::DEBUG
+          @logger = logger
         end
 
         def server_params
@@ -55,6 +54,14 @@ module Another
 
           @s.run_tcpserver
           @s.join
+        end
+
+        def logger
+          return @logger if @logger
+
+          $stdout.sync = true
+          @logger ||= Logger.new($stdout)
+          @logger.level = conf.debug ? Logger::DEBUG : Logger::INFO
         end
 
         def self.run(conf:)

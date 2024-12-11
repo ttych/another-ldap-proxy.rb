@@ -71,6 +71,8 @@ module Another
           end
 
           def bind(_version, dn, password)
+            logger&.info "Ldap#bind : dn:#{dn}"
+            logger&.debug "Ldap#bind : dn:#{dn} password:#{password}"
             bind_ldap = new_client(auth: auth(username: dn, password: password))
             status = bind_ldap.bind ? true : false
             logger&.info "Ldap#bind : #{dn} => #{status}"
@@ -79,10 +81,12 @@ module Another
           end
 
           def search(basedn, scope, _deref, filter)
+            logger&.debug "Ldap#search : filter:#{filter}"
             results = []
             client.search(base: search_base(basedn), scope: scope, filter: filter, return_results: true) do |entry|
               results << entry
             end
+            logger&.info "Ldap#search : results => #{results.size}"
             results
           rescue Net::LDAP::Error => e
             logger&.warn "Ldap#search : Error querying LDAP server: #{e.message}"
