@@ -62,6 +62,7 @@ module Another
           $stdout.sync = true
           @logger ||= Logger.new($stdout)
           @logger.level = conf.debug ? Logger::DEBUG : Logger::INFO
+          @logger
         end
 
         def self.run(conf:)
